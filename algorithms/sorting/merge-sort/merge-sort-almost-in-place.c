@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+// TODO: doesn't work
+
 #define LENGTH(a) sizeof(a)/sizeof(a[0])
 
 void merge_sort(int *array, int start, int end);
@@ -42,22 +44,25 @@ void merge_sort(int *array, int start, int end) {
 	int count = start;
 	int temparray[end + 1];
 
+	printf("\n----------------");
+	printf("\narray subset 1");
+	for (int i = s1; i < e1; i++) {
+		printf("%d ", array[i]);
+	}
+	printf("\narray subset 2");
+	for (int i = s2; i < e2; i++) {
+		printf("%d ", array[i]);
+	}
+	printf("\n----------------");
+
 	while (count < end + 1) {
-		if (s1 > e1) {
+		if ((s1 > e1) || (array[s1] > array[s2])) {
 			temparray[count] = array[s2];
 			s2++;
-		}
-		else if (s2 > e2) {
-			temparray[count] = array[s1];
-			s1++;
-		}
-		else if (array[s1] < array[s2]) {
-			temparray[count] = array[s1];
-			s1++;
 		}
 		else {
-			temparray[count] = array[s2];
-			s2++;
+			temparray[count] = array[s1];
+			s1++;
 		}
 		count++;
 		operations++;

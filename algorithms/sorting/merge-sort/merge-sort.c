@@ -11,6 +11,11 @@ int main() {
 
 	int array[5] = {4, 3, 2, 5, 1};
 	operations = 0;
+	printf("\n-------------------\n");
+	for (int i = 0; i < LENGTH(array); i++) {
+		printf("%d", array[i]);
+	}
+	printf("\n-------------------\n");
 
 	merge_sort(array, LENGTH(array));
 

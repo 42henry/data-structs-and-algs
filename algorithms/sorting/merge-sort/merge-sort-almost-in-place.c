@@ -1,32 +1,35 @@
 #include <stdio.h>
 
-// TODO: doesn't work
+#include "../test.c"
 
 #define LENGTH(a) sizeof(a)/sizeof(a[0])
 
 void merge_sort(int *array, int start, int end);
+void merge_sort_almost_in_place(int *array, int array_length);
+
 int operations = 0;
 
 int main() {
 
-	int array[5] = {3, 4, 2, 1, 5};
-
-	printf("\n-----------------------\n");
-	for (int i = 0; i < LENGTH(array); i++) {
-		printf("%d", array[i]);
+	int array[5] = {2, 1, 5, 3, 4};
+	printf("\narray before: ");
+	for (int i = 0; i < 5; i++) {
+		printf("%d ", array[i]);
 	}
-	printf("\n-----------------------\n");
-
-	merge_sort(array, 0, LENGTH(array) - 1);
-
-	printf("\n-----------------------\n");
-	for (int i = 0; i < LENGTH(array); i++) {
-		printf("%d", array[i]);
+	merge_sort_almost_in_place(array, 5);
+	printf("\narray after: ");
+	for (int i = 0; i < 5; i++) {
+		printf("%d ", array[i]);
 	}
-	printf("\n-----------------------\n");
-	printf("%d operations", operations);
+
+	//benchmark(merge_sort_almost_in_place);
 
 	return 0;
+}
+
+void merge_sort_almost_in_place(int *array, int array_length) {
+	merge_sort(array, 0, array_length);
+	return;
 }
 
 void merge_sort(int *array, int start, int end) {
@@ -44,19 +47,16 @@ void merge_sort(int *array, int start, int end) {
 	int count = start;
 	int temparray[end + 1];
 
-	printf("\n----------------");
-	printf("\narray subset 1");
-	for (int i = s1; i < e1; i++) {
-		printf("%d ", array[i]);
-	}
-	printf("\narray subset 2");
-	for (int i = s2; i < e2; i++) {
-		printf("%d ", array[i]);
-	}
-	printf("\n----------------");
-
 	while (count < end + 1) {
-		if ((s1 > e1) || (array[s1] > array[s2])) {
+		if (s1 > e1) {
+			temparray[count] = array[s2];
+			s2++;
+		}
+		else if (s2 > e2) {
+			temparray[count] = array[s1];
+			s1++;
+		}
+		else if ((array[s1] >= array[s2])) {
 			temparray[count] = array[s2];
 			s2++;
 		}
@@ -68,7 +68,7 @@ void merge_sort(int *array, int start, int end) {
 		operations++;
 	}
 
-	for (int i = start; i < end; i++) {
+	for (int i = start; i < end + 1; i++) {
 		array[i] = temparray[i];
 		operations++;
 	}

@@ -1,19 +1,21 @@
 #include <stdio.h>
 
+#include "..\test.c"
+
 #define LENGTH(a) sizeof(a)/sizeof(a[0])
+
+void bubble_sort(int *array, int array_length);
 
 int main() {
 
-	int array[5] = {3, 4, 2, 1, 5};
+	benchmark(bubble_sort);
 
-	printf("\n-----------------------\n");
-	for (int i = 0; i < LENGTH(array); i++) {
-		printf("%d", array[i]);
-	}
-	printf("\n-----------------------\n");
+	return 0;
+}
 
-	for (int i = 0; i < LENGTH(array); i++) {
-		for (int j = i + 1; j < LENGTH(array); j++) {
+void bubble_sort(int *array, int array_length) {
+	for (int i = 0; i < array_length; i++) {
+		for (int j = i + 1; j < array_length; j++) {
 			if (array[j] < array[i]) {
 				int temp = array[i];
 				array[i] = array[j];
@@ -21,12 +23,4 @@ int main() {
 			}
 		}
 	}
-
-	printf("\n-----------------------\n");
-	for (int i = 0; i < LENGTH(array); i++) {
-		printf("%d", array[i]);
-	}
-	printf("\n-----------------------\n");
-
-	return 0;
 }

@@ -1,19 +1,21 @@
 #include <stdio.h>
 
+#include "..\test.c"
+
 #define LENGTH(a) sizeof(a)/sizeof(a[0])
+
+void insertion_sort(int *array, int array_length);
 
 int main() {
 
-	int array[5] = {4, 3, 2, 5, 1};
+	benchmark(insertion_sort);
 
-	printf("\n-----------------------\n");
-	for (int i = 0; i < LENGTH(array); i++) {
-		printf("%d", array[i]);
-	}
-	printf("\n-----------------------\n");
+	return 0;
+}
 
+void insertion_sort(int *array, int array_length) {
 	int count = 0;
-	for (int i = 1; i < LENGTH(array); i++) {
+	for (int i = 1; i < array_length; i++) {
 		int curr = array[i];
 		int j = i - 1;
 		while ((j > -1) && (array[j] > curr)) {
@@ -24,13 +26,5 @@ int main() {
 		j++;
 		array[j] = curr;
 	}
-
-	printf("\n-----------------------\n");
-	for (int i = 0; i < LENGTH(array); i++) {
-		printf("%d", array[i]);
-	}
-	printf("\n-----------------------\n");
-	printf("\ntook %d operations", count);
-
-	return 0;
+	return;
 }
